@@ -20,28 +20,28 @@ Project 6 consists of 2 parts:
 3. Attach the volumes to the webserver instance.
 ![Attach volumes](/Project6/images/attach_volumes.png)   
 4. Connect to the instance 
-5. Use the command `lsblk` to inspect block devices attached. The attached volumes should be be displayed, alongside any other block devices. 
+5. Use the command `lsblk` to inspect block devices attached. The attached volumes should be be displayed, alongside any other block devices.   
 ![lsblk](/Project6/images/lsblk.png)
 6. All devices are located in the /dev/ directory. Confirm the block devices are in this directory.
 ![ls /dev/](/Project6/images/lsdev.png)
 7. Use the command `df -h` to view mounts and free space
 ![df -h command](/Project6/images/df.png)
-8. Create a single partition using the `gdisk` utility:
-    a. `sudo gdisk /dev/xvdf`
-    b. Add a partition - `n`
-    c. Hit enter to use default values for all except the HEX code `8e00`
-    d. View partition table - `p`
-    e. Write the table to disk and exit - `w`
-    f. Repeat for remaining disks `sudo gdisk /dev/xvdg` `sudo gdisk /dev/xvdh`
-9. Confirm partitions by running `lsblk`
+8. Create a single partition using the `gdisk` utility:   
+    a. `sudo gdisk /dev/xvdf`   
+    b. Add a partition - `n`      
+    c. Hit enter to use default values for all except the HEX code `8e00`     
+    d. View partition table - `p`    
+    e. Write the table to disk and exit - `w`     
+    f. Repeat for remaining disks `sudo gdisk /dev/xvdg` `sudo gdisk /dev/xvdh`     
+9. Confirm partitions by running `lsblk`      
 ![lsblk after partitions](/Project6/images/lsblk_with_partitions.png)
 10. Install lvm2 package via yum, the package manager for RedHat/CentOS.
 ```bash
 sudo yum install lvm2
 ```
-![install lvm2](/Project6/images/install_lvm2.png)
+![install lvm2](/Project6/images/install_lvm2.png)        
 11. Run `sudo lvmdiskscan` to check for available partitions.
-![lvmdiskscan](/Project6/images/lvmdiskscan.png)
+![lvmdiskscan](/Project6/images/lvmdiskscan.png)       
 12. Use `pvcreate` to mark disks as physical volumes (PVs) to be used by LVM
 ```bash
 sudo pvcreate /dev/xvdf1
@@ -49,7 +49,7 @@ sudo pvcreate /dev/xvdg1
 sudo pvcreate /dev/xvdh1
 ```
 13. Confirm the creation of the physical volumes `sudo pvs`
-![pvcreate](/Project6/images/pvcreate.png)
+![pvcreate](/Project6/images/pvcreate.png)       
 14. Use `vgcreate` utility to add all 3 physical volumes to a volume group (VG). Name this VG `webdata-vg` and verify the creation.
 ```
 sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
